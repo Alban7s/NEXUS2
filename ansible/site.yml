@@ -1,0 +1,17 @@
+---
+# Configure the NEXUS Ubuntu 24.04 server. Safe to run repeatedly (idempotent).
+#   ansible-playbook site.yml --syntax-check
+#   ansible-playbook site.yml --check --diff
+#   ansible-playbook site.yml
+- name: Configure NEXUS server
+  hosts: nexus_servers
+  become: true
+  roles:
+    - { role: common,     tags: [common] }
+    - { role: java,       tags: [java] }
+    - { role: docker,     tags: [docker] }
+    - { role: trivy,      tags: [trivy] }
+    - { role: jenkins,    tags: [jenkins] }
+    - { role: kubectl,    tags: [kubectl] }
+    - { role: minikube,   tags: [minikube] }
+    - { role: monitoring, tags: [monitoring] }

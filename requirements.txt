@@ -1,0 +1,13 @@
+# Runtime dependencies for the NEXUS backend (Python 3.10+)
+fastapi>=0.110
+uvicorn[standard]>=0.29
+httpx>=0.27
+python-multipart>=0.0.9
+pydantic>=2.6
+python-dotenv>=1.0
+pyyaml>=6.0
+# docker>=7.1.0 fixes the "Not supported URL scheme http+docker" error seen with requests 2.32.
+# On Windows it pulls in pywin32, which provides the named-pipe connection to Docker Desktop.
+docker>=7.1.0
+kubernetes>=29.0
+boto3>=1.34

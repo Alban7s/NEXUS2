@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+nexus-jobs/
+nexus-data/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+*.zip
+tests/fixtures/_generated/
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/terraform.tfvars
+# Ansible
+ansible/inventory/hosts.yml
+*.pem
+*.key

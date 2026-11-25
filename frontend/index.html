@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXUS — DevOps Deployment Platform</title>
+<meta name="description" content="NEXUS builds, scans, deploys, monitors and rolls back websites from a ZIP upload or a GitHub repository.">
+<link rel="icon" type="image/svg+xml" href="assets/nexus-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="app">
+  <!-- ============ NAVIGATION RAIL ============ -->
+  <aside class="rail" id="rail" aria-label="Primary">
+    <a class="brand" href="#/dashboard" aria-label="NEXUS dashboard"><img src="assets/nexus-logo-light.svg" alt="NEXUS" width="140" height="33"></a>
+    <nav class="nav" id="nav">
+      <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
+      <p class="nav-group">Overview</p>
+      <a class="nav-link" href="#/dashboard" data-route="dashboard"><i data-icon="home"></i>Dashboard</a>
+      <p class="nav-group">Deploy</p>
+      <a class="nav-link" href="#/deploy" data-route="deploy"><i data-icon="rocket"></i>New Deployment</a>
+      <a class="nav-link" href="#/zip" data-route="zip"><i data-icon="upload"></i>ZIP Upload</a>
+      <a class="nav-link" href="#/github" data-route="github"><i data-icon="github"></i>GitHub Deployment</a>
+      <a class="nav-link" href="#/history" data-route="history"><i data-icon="clock"></i>Deployment History</a>
+      <p class="nav-group">Platform</p>
+      <a class="nav-link" href="#/pipeline" data-route="pipeline"><i data-icon="flow"></i>CI/CD Pipeline</a>
+      <a class="nav-link" href="#/kubernetes" data-route="kubernetes"><i data-icon="cube"></i>Kubernetes</a>
+      <a class="nav-link" href="#/security" data-route="security"><i data-icon="shield"></i>Security</a>
+      <a class="nav-link" href="#/monitoring" data-route="monitoring"><i data-icon="pulse"></i>Monitoring</a>
+      <a class="nav-link" href="#/infrastructure" data-route="infrastructure"><i data-icon="server"></i>Infrastructure</a>
+      <a class="nav-link" href="#/gitops" data-route="gitops"><i data-icon="branch"></i>GitOps / Argo CD</a>
+      <p class="nav-group">Admin</p>
+      <a class="nav-link" href="#/settings" data-route="settings"><i data-icon="gear"></i>Settings</a>
+    </nav>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <div class="main-col">
+    <header class="topbar">
+      <button class="icon-btn nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="rail" aria-label="Open navigation menu"><i data-icon="menu"></i></button>
+      <h1 class="page-title" id="page-title">Dashboard</h1>
+      <div class="topbar-actions">
+        <span class="status-pill" id="header-status" role="status"><span class="dot dot--gray" aria-hidden="true"></span><span>Checking services…</span></span>
+        <button class="btn btn--ghost btn--sm" id="key-btn" type="button"><i data-icon="key"></i><span>Access key</span></button>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+
+      <!-- ================= DASHBOARD ================= -->
+      <section class="view" data-view="dashboard" hidden aria-labelledby="page-title">
+        <div class="hero">
+          <div class="hero-bg" aria-hidden="true"><span class="hero-orbit hero-orbit--one"></span><span class="hero-orbit hero-orbit--two"></span></div>
+          <div class="hero-inner">
+            <div class="hero-copy">
+              <p class="hero-kicker">DevOps deployment platform</p>
+              <p class="hero-title" aria-label="NEXUS"><span>N</span><span>E</span><span>X</span><span>U</span><span>S</span></p>
+              <h2 class="hero-headline">Automated DevOps for modern applications</h2>
+              <p class="hero-sub">Build, scan, deploy, monitor and roll back — from a ZIP file or a GitHub repository.</p>
+              <div class="hero-actions">
+                <a href="#/deploy" class="btn btn--primary btn--lg"><i data-icon="rocket"></i>New deployment</a>
+                <a href="#/github" class="btn btn--secondary btn--lg"><i data-icon="github"></i>GitHub workflow</a>
+              </div>
+            </div>
+            <div class="hero-visual">
+      <div class="visual-backdrop-word" aria-hidden="true">NEXUS</div>
+      <div class="visual-grid" aria-hidden="true"></div>
+      <div class="visual-cloud" aria-hidden="true"><svg viewBox="0 0 120 74"><path d="M26 61C11 61 4 51 4 39c0-11 8-20 20-21C29 5 41 1 53 5c10 3 16 11 18 21 15-2 28 8 28 21 0 8-6 14-15 14H26Z" fill="url(#cloudFill)" stroke="#B9D8F3" stroke-width="1.5"/><defs><linearGradient id="cloudFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#BBDCF7"/></linearGradient></defs></svg></div>
+      <div class="infinity-stage">
+        <svg class="infinity-svg" viewBox="0 0 700 470" role="img" aria-label="CI/CD infinity loop">
+          <defs>
+            <linearGradient id="loopBlue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6BE2FF"/><stop offset=".42" stop-color="#087FEA"/><stop offset="1" stop-color="#1757C8"/></linearGradient>
+            <linearGradient id="loopCoral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFB0A7"/><stop offset=".48" stop-color="#F15D5B"/><stop offset="1" stop-color="#C83A54"/></linearGradient>
+            <linearGradient id="loopShine" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".75"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <filter id="loopShadow" x="-30%" y="-30%" width="160%" height="170%"><feGaussianBlur stdDeviation="13"/></filter>
+            <linearGradient id="platformTop" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F6FCFF"/><stop offset="1" stop-color="#A7D7FA"/></linearGradient>
+          </defs>
+          <ellipse cx="350" cy="373" rx="260" ry="31" fill="#5FADEB" opacity=".18" filter="url(#loopShadow)"/>
+          <ellipse cx="350" cy="366" rx="250" ry="47" fill="none" stroke="#77C9F4" stroke-width="2" opacity=".42"/>
+          <ellipse cx="350" cy="366" rx="217" ry="34" fill="none" stroke="#4EA6E9" stroke-width="2" opacity=".45"/>
+          <path d="M350 208 C291 127 219 96 155 135 C72 185 91 295 171 322 C239 345 298 287 350 208 C402 129 461 97 528 135 C612 183 608 294 528 322 C461 348 408 289 350 208Z" fill="none" stroke="#164F9E" stroke-width="54" opacity=".17" filter="url(#loopShadow)" transform="translate(0 12)"/>
+          <path d="M350 208 C291 127 219 96 155 135 C72 185 91 295 171 322 C239 345 298 287 350 208 C402 129 461 97 528 135 C612 183 608 294 528 322 C461 348 408 289 350 208Z" fill="none" stroke="url(#loopBlue)" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M350 208 C402 129 461 97 528 135 C612 183 608 294 528 322 C461 348 408 289 350 208" fill="none" stroke="url(#loopCoral)" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M350 208 C291 127 219 96 155 135 C72 185 91 295 171 322 C239 345 298 287 350 208" fill="none" stroke="url(#loopShine)" stroke-width="7" stroke-linecap="round" opacity=".65"/>
+          <path d="M350 208 C402 129 461 97 528 135 C612 183 608 294 528 322 C461 348 408 289 350 208" fill="none" stroke="url(#loopShine)" stroke-width="7" stroke-linecap="round" opacity=".6"/>
+          <text x="224" y="249" text-anchor="middle" fill="#fff" font-size="43" font-weight="800" font-family="Inter, sans-serif">CI</text>
+          <text x="483" y="249" text-anchor="middle" fill="#fff" font-size="43" font-weight="800" font-family="Inter, sans-serif">CD</text>
+          <ellipse cx="350" cy="398" rx="199" ry="32" fill="#7DBEEB" opacity=".2"/>
+          <path d="M151 385Q350 431 549 385L537 414Q350 456 163 414Z" fill="#4F9CD8" opacity=".32"/>
+          <ellipse cx="350" cy="384" rx="199" ry="29" fill="url(#platformTop)" stroke="#8BC5EE" stroke-width="2"/>
+          <ellipse cx="350" cy="383" rx="137" ry="17" fill="none" stroke="#48AEEB" stroke-width="3" opacity=".65"/>
+          <ellipse cx="350" cy="383" rx="75" ry="9" fill="#1C8DD9" opacity=".23"/>
+          <path d="M311 371Q350 357 389 371L381 382H319Z" fill="#4CAFEA" opacity=".75"/>
+        </svg>
+      </div>
+      <div class="server-cluster" aria-hidden="true">
+        <div class="server server--one"><i></i><i></i><i></i></div>
+        <div class="server server--two"><i></i><i></i><i></i></div>
+        <div class="server server--three"><i></i><i></i><i></i></div>
+      </div>
+      <div class="float-cube cube--one" aria-hidden="true"></div><div class="float-cube cube--two" aria-hidden="true"></div>
+      <div class="hero-status-rail" aria-label="Live platform status sections">
+        <a class="hero-status-card" href="#/history"><span class="status-symbol status-symbol--blue">⌁</span><span><strong>Deployments</strong><small data-live="history">Release history</small></span><span class="status-arrow">↗</span></a>
+        <a class="hero-status-card" href="#/kubernetes"><span class="status-symbol status-symbol--blue">◇</span><span><strong>Kubernetes</strong><small data-live="kubernetes">Cluster status</small></span><span class="status-arrow">↗</span></a>
+        <a class="hero-status-card hero-status-card--coral" href="#/security"><span class="status-symbol status-symbol--coral">✓</span><span><strong>Security</strong><small data-live="security">Scan status</small></span><span class="status-arrow">↗</span></a>
+        <a class="hero-status-card hero-status-card--violet" href="#/infrastructure"><span class="status-symbol status-symbol--violet">▤</span><span><strong>Infrastructure</strong><small data-live="infrastructure">Host status</small></span><span class="status-arrow">↗</span></a>
+      </div>
+      
+    </div>
+          </div>
+        </div>
+
+        <div class="grid grid--4" id="dash-stats" aria-live="polite"></div>
+        <div class="grid grid--2">
+          <article class="card"><div class="card-head"><h3>Latest release</h3><a class="link" href="#/history">All releases</a></div><div id="dash-latest"></div></article>
+          <article class="card"><div class="card-head"><h3>Connected services</h3><a class="link" href="#/settings">Manage</a></div><div id="dash-services"></div></article>
+        </div>
+      </section>
+
+      <!-- ================= NEW DEPLOYMENT ================= -->
+      <section class="view" data-view="deploy" hidden aria-labelledby="page-title">
+        <p class="lead">Both ways of submitting code end in the same pipeline, so every release is built, scanned and verified the same way.</p>
+        <div class="grid grid--2">
+          <article class="card choice">
+            <span class="choice-icon"><i data-icon="upload"></i></span>
+            <h3>ZIP upload</h3>
+            <p>Upload a static site, a React/Vite project or another Node frontend as a .zip file. No GitHub account needed.</p>
+            <a class="btn btn--primary" href="#/zip"><i data-icon="upload"></i>Upload a ZIP</a>
+          </article>
+          <article class="card choice">
+            <span class="choice-icon choice-icon--dark"><i data-icon="github"></i></span>
+            <h3>GitHub deployment</h3>
+            <p>The administrator connects one repository to Jenkins. A push or a click on “Deploy now” starts the release.</p>
+            <a class="btn btn--secondary" href="#/github"><i data-icon="github"></i>Open GitHub deployment</a>
+          </article>
+        </div>
+        <article class="card">
+          <div class="card-head"><h3>The shared release pipeline</h3><span class="data-source" id="deploy-target"></span></div>
+          <ol class="stages stages--static" id="deploy-overview-steps"></ol>
+        </article>
+      </section>
+
+      <!-- ================= ZIP UPLOAD ================= -->
+      <section class="view" data-view="zip" hidden aria-labelledby="page-title">
+        <div class="split">
+          <article class="card">
+            <form id="zip-form" novalidate>
+              <div class="card-head"><h3>Upload a project</h3><span class="data-source" id="zip-target"></span></div>
+              <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a ZIP file to upload">
+                <input type="file" id="zip-input" accept=".zip,application/zip" hidden>
+                <i data-icon="upload" class="dropzone-icon"></i>
+                <p class="dropzone-title" id="dropzone-title">Drop your project ZIP here</p>
+                <p class="dropzone-sub" id="dropzone-sub">or click to browse</p>
+              </div>
+              <div class="field">
+                <label for="zip-name">Project name <span class="hint">optional</span></label>
+                <input id="zip-name" class="input" type="text" placeholder="e.g. marketing-site" autocomplete="off" maxlength="50">
+              </div>
+              <div class="upload-progress" id="upload-progress" hidden><span id="upload-bar"></span></div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn--primary" id="zip-submit" disabled><span class="btn-label">Start release</span></button>
+                <button type="button" class="btn btn--ghost" id="zip-clear" hidden>Clear</button>
+              </div>
+              <p class="form-error" id="zip-error" role="alert" hidden></p>
+            </form>
+          </article>
+          <aside class="card card--note">
+            <h3>What is accepted</h3>
+            <ul class="checks">
+              <li>Static sites with a root <code>index.html</code></li>
+              <li>React/Vite and other Node projects with a <code>build</code> script</li>
+              <li>Up to <strong id="max-upload">100</strong> MB</li>
+            </ul>
+            <h3>What is rejected</h3>
+            <ul class="checks checks--no">
+              <li>Corrupt, empty or encrypted archives</li>
+              <li>Paths that escape the folder (<code>../</code>)</li>
+              <li>Symlinks, nested archives, <code>.git</code></li>
+              <li><code>.env</code> files and private keys</li>
+              <li>ZIP bombs and huge file counts</li>
+            </ul>
+            <p class="note">Uploaded code is built inside Docker, never run on the NEXUS server itself.</p>
+          </aside>
+        </div>
+        <div id="zip-run" hidden></div>
+      </section>
+
+      <!-- ================= GITHUB ================= -->
+      <section class="view" data-view="github" hidden aria-labelledby="page-title">
+        <p class="lead">Developers don’t sign in to GitHub here. The administrator connects one repository to Jenkins once; Jenkins keeps the credentials.</p>
+        <div class="split">
+          <article class="card">
+            <div class="card-head"><h3>Repository</h3><span class="data-source" id="gh-source"></span></div>
+            <div id="gh-config"></div>
+            <form id="gh-form" class="inline-form" novalidate>
+              <div class="field"><label for="gh-branch">Branch</label><input id="gh-branch" class="input" type="text" autocomplete="off" maxlength="100"></div>
+              <button type="submit" class="btn btn--primary" id="gh-submit"><span class="btn-label">Deploy now</span></button>
+            </form>
+            <p class="form-error" id="gh-error" role="alert" hidden></p>
+          </article>
+          <aside class="card card--note">
+            <h3>Setup checklist</h3>
+            <ol class="checks checks--num" id="gh-checklist"></ol>
+          </aside>
+        </div>
+        <article class="card">
+          <div class="card-head"><h3>Recent webhook activity</h3></div>
+          <div id="gh-deliveries"></div>
+        </article>
+        <div id="gh-run" hidden></div>
+      </section>
+
+      <!-- ================= HISTORY ================= -->
+      <section class="view" data-view="history" hidden aria-labelledby="page-title">
+        <div class="toolbar">
+          <div class="chips" id="history-filter" role="group" aria-label="Filter releases">
+            <button class="chip is-active" data-filter="all" type="button">All</button>
+            <button class="chip" data-filter="success" type="button">Succeeded</button>
+            <button class="chip" data-filter="failed" type="button">Failed</button>
+            <button class="chip" data-filter="rollback" type="button">Rollbacks</button>
+          </div>
+          <button class="btn btn--ghost btn--sm" id="history-refresh" type="button"><i data-icon="refresh"></i><span class="btn-label">Refresh</span></button>
+        </div>
+        <article class="card card--flush"><div class="table-scroll" id="history-table"></div></article>
+      </section>
+
+      <!-- ================= CI/CD PIPELINE ================= -->
+      <section class="view" data-view="pipeline" hidden aria-labelledby="page-title">
+        <article class="card">
+          <div class="card-head"><h3>Latest run, stage by stage</h3><span class="data-source" id="pipeline-source"></span></div>
+          <ol class="stages" id="pipeline-stages"></ol>
+          <p class="note" id="pipeline-note"></p>
+        </article>
+        <div class="grid grid--2">
+          <article class="card"><div class="card-head"><h3>Jenkins</h3></div><div id="pipeline-jenkins"></div></article>
+          <article class="card"><div class="card-head"><h3>GitHub Actions feed</h3><span class="hint">optional, read-only</span></div><div id="pipeline-actions"></div></article>
+        </div>
+        <article class="card">
+          <div class="card-head"><h3>Who does what</h3></div>
+          <div class="roles" id="pipeline-roles"></div>
+        </article>
+      </section>
+
+      <!-- ================= KUBERNETES ================= -->
+      <section class="view" data-view="kubernetes" hidden aria-labelledby="page-title">
+        <div class="toolbar"><span class="data-source" id="k8s-source"></span>
+          <button class="btn btn--ghost btn--sm" id="k8s-refresh" type="button"><i data-icon="refresh"></i><span class="btn-label">Refresh</span></button></div>
+        <div class="grid grid--4" id="k8s-stats"></div>
+        <article class="card card--flush"><div class="card-head card-head--pad"><h3>Deployments</h3></div><div class="table-scroll" id="k8s-deployments"></div></article>
+        <div class="grid grid--2">
+          <article class="card card--flush"><div class="card-head card-head--pad"><h3>Pods</h3></div><div class="table-scroll" id="k8s-pods"></div></article>
+          <article class="card card--flush"><div class="card-head card-head--pad"><h3>Services</h3></div><div class="table-scroll" id="k8s-services"></div></article>
+        </div>
+        <article class="card" id="rollback-card">
+          <div class="card-head"><h3>Revisions and rollback</h3>
+            <select id="rollback-select" class="input input--sm" aria-label="Deployment"></select></div>
+          <div id="k8s-revisions"></div>
+        </article>
+        <div id="rollback-run" hidden></div>
+      </section>
+
+      <!-- ================= SECURITY ================= -->
+      <section class="view" data-view="security" hidden aria-labelledby="page-title">
+        <div class="toolbar"><span class="data-source" id="sec-source"></span>
+          <button class="btn btn--ghost btn--sm" id="sec-refresh" type="button"><i data-icon="refresh"></i><span class="btn-label">Refresh</span></button></div>
+        <div id="sec-banner"></div>
+        <div class="grid grid--2">
+          <article class="card"><div class="card-head"><h3>Findings by severity</h3><span class="hint">latest scan per app</span></div><div id="sec-totals"></div></article>
+          <article class="card"><div class="card-head"><h3>Security gate</h3></div><div id="sec-gate"></div></article>
+        </div>
+        <article class="card card--flush"><div class="card-head card-head--pad"><h3>Scans</h3></div><div class="table-scroll" id="sec-scans"></div></article>
+        <article class="card card--flush" id="sec-findings-card" hidden><div class="card-head card-head--pad"><h3 id="sec-findings-title">Findings</h3><button class="btn btn--ghost btn--sm" id="sec-download" type="button"><i data-icon="download"></i><span class="btn-label">Download JSON report</span></button></div><div class="table-scroll" id="sec-findings"></div></article>
+      </section>
+
+      <!-- ================= MONITORING ================= -->
+      <section class="view" data-view="monitoring" hidden aria-labelledby="page-title">
+        <div class="toolbar"><span class="data-source" id="mon-source"></span>
+          <div class="toolbar-actions">
+            <a class="btn btn--secondary btn--sm" id="grafana-link" href="#" target="_blank" rel="noopener noreferrer" hidden><i data-icon="chart"></i>Open Grafana</a>
+            <button class="btn btn--ghost btn--sm" id="mon-refresh" type="button"><i data-icon="refresh"></i><span class="btn-label">Refresh</span></button></div></div>
+        <div id="mon-banner"></div>
+        <div class="grid grid--4" id="mon-panels"></div>
+        <div class="grid grid--2" id="mon-charts"></div>
+        <article class="card card--flush"><div class="card-head card-head--pad"><h3>Scrape targets</h3></div><div class="table-scroll" id="mon-targets"></div></article>
+      </section>
+
+      <!-- ================= INFRASTRUCTURE ================= -->
+      <section class="view" data-view="infrastructure" hidden aria-labelledby="page-title">
+        <div class="toolbar"><span class="data-source" id="infra-source"></span>
+          <button class="btn btn--ghost btn--sm" id="infra-refresh" type="button"><i data-icon="refresh"></i><span class="btn-label">Refresh</span></button></div>
+        <div class="grid grid--2">
+          <article class="card"><div class="card-head"><h3>NEXUS host</h3></div><div id="infra-host"></div></article>
+          <article class="card"><div class="card-head"><h3>Disk (25 GB budget)</h3></div><div id="infra-disk"></div></article>
+        </div>
+        <article class="card"><div class="card-head"><h3>AWS instances</h3></div><div id="infra-aws"></div></article>
+        <div class="grid grid--2">
+          <article class="card"><div class="card-head"><h3>Terraform</h3><span class="badge badge--gray">run from your terminal</span></div>
+            <p>Creates the VPC, security group (SSH from one IP only) and the <code>m7i-flex.large</code> server with a 25 GB disk.</p>
+            <pre class="code">cd terraform
+terraform init
+terraform validate
+terraform plan</pre></article>
+          <article class="card"><div class="card-head"><h3>Ansible</h3><span class="badge badge--gray">run from your terminal</span></div>
+            <p>Installs Java 21, Docker, Trivy, Jenkins, kubectl and Minikube prerequisites on the server.</p>
+            <pre class="code">cd ansible
+ansible-playbook site.yml --syntax-check
+ansible-playbook site.yml --check --diff</pre></article>
+        </div>
+      </section>
+
+      <!-- ================= GITOPS ================= -->
+      <section class="view" data-view="gitops" hidden aria-labelledby="page-title">
+        <div class="toolbar"><span class="data-source" id="gitops-source"></span>
+          <button class="btn btn--ghost btn--sm" id="gitops-refresh" type="button"><i data-icon="refresh"></i><span class="btn-label">Refresh</span></button></div>
+        <div id="gitops-body"></div>
+      </section>
+
+      <!-- ================= SETTINGS ================= -->
+      <section class="view" data-view="settings" hidden aria-labelledby="page-title">
+        <article class="card">
+          <div class="card-head"><h3>Docker Engine</h3><button class="btn btn--secondary btn--sm" id="docker-refresh" type="button"><i data-icon="refresh"></i><span class="btn-label">Check again</span></button></div>
+          <div id="docker-panel"></div>
+        </article>
+        <article class="card card--flush"><div class="card-head card-head--pad"><h3>Integrations</h3><span class="data-source" id="settings-source"></span></div><div id="integration-list"></div></article>
+        <article class="card"><div class="card-head"><h3>Effective configuration</h3><span class="hint">no secrets shown</span></div><div id="config-panel"></div></article>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<dialog id="dialog" class="dialog"><form method="dialog" id="dialog-form"><h3 id="dialog-title"></h3><div id="dialog-body"></div>
+  <div class="dialog-actions"><button class="btn btn--ghost" value="cancel" id="dialog-cancel">Cancel</button><button class="btn btn--primary" value="ok" id="dialog-ok">Confirm</button></div></form></dialog>
+<dialog id="drawer" class="drawer"><div class="drawer-head"><h3 id="drawer-title">Release</h3><button class="icon-btn" id="drawer-close" aria-label="Close"><i data-icon="close"></i></button></div><div id="drawer-body"></div></dialog>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+<script src="views.js"></script>
+</body>
+</html>

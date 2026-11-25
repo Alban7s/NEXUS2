@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="NEXUS">
+<defs>
+<linearGradient id="hx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B74E4"/><stop offset="1" stop-color="#012A5C"/></linearGradient>
+<linearGradient id="pl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A70"/><stop offset="1" stop-color="#F25B48"/></linearGradient>
+<linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<polygon points="32,2.5 57.5,17.25 57.5,46.75 32,61.5 6.5,46.75 6.5,17.25" fill="url(#hx)"/>
+<polygon points="32,2.5 57.5,17.25 57.5,46.75 32,61.5 6.5,46.75 6.5,17.25" fill="url(#gl)"/>
+<polygon points="32,2.5 57.5,17.25 57.5,46.75 32,61.5 6.5,46.75 6.5,17.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+<path d="M21 44V20" stroke="#fff"/><path d="M43 44V20" stroke="#fff"/>
+<path d="M21 20L43 44" stroke="url(#pl)"/>
+</g>
+<circle cx="21" cy="20" r="4.2" fill="#fff" stroke="#F25B48" stroke-width="2.4"/>
+<circle cx="43" cy="44" r="4.2" fill="#fff" stroke="#F25B48" stroke-width="2.4"/>
+<circle cx="21" cy="44" r="2.4" fill="#fff"/><circle cx="43" cy="20" r="2.4" fill="#fff"/>
+</svg>

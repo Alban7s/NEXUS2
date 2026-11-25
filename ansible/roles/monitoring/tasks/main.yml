@@ -1,0 +1,23 @@
+---
+- name: Create monitoring directory
+  ansible.builtin.file:
+    path: "{{ monitoring_dir }}"
+    state: directory
+    owner: "{{ admin_user }}"
+    mode: "0755"
+
+- name: Copy the monitoring stack (Prometheus + Grafana + exporters)
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/../monitoring/"
+    dest: "{{ monitoring_dir }}/"
+    owner: "{{ admin_user }}"
+    mode: preserve
+  when: monitoring_deploy | bool
+
+- name: Start the monitoring stack
+  ansible.builtin.command: docker compose up -d
+  args:
+    chdir: "{{ monitoring_dir }}"
+  register: monitoring_up
+  changed_when: "'Started' in monitoring_up.stderr or 'Created' in monitoring_up.stderr"
+  when: monitoring_deploy | bool

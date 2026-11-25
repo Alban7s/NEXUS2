@@ -1,0 +1,29 @@
+# NEXUS on a machine you control (Windows Docker Desktop or Ubuntu EC2).
+#   docker compose up -d --build
+#
+# SECURITY: mounting the Docker socket gives NEXUS root-equivalent control of
+# the host. Only do this on a machine you control, set NEXUS_API_KEY, and keep
+# port 8000 closed to the internet (use an SSH tunnel or an IP-restricted SG).
+services:
+  nexus-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_TRIVY: "${INSTALL_TRIVY:-false}"
+    env_file:
+      - .env
+    environment:
+      NEXUS_WORK_DIR: /tmp/nexus-jobs
+      NEXUS_DATA_DIR: /data
+    ports:
+      - "127.0.0.1:8000:8000"      # loopback only; change deliberately to expose
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - nexus-jobs:/tmp/nexus-jobs
+      - nexus-data:/data
+    restart: unless-stopped
+
+volumes:
+  nexus-jobs:
+  nexus-data:

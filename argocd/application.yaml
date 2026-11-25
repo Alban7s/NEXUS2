@@ -1,0 +1,37 @@
+# Argo CD ApplicationSet: one Argo CD Application per folder under apps/ in your GitOps repo.
+# NEXUS writes apps/<app-name>/{deployment,service}.yaml and pushes; Argo CD syncs the cluster.
+#
+# Responsibilities:   Jenkins/NEXUS = build + scan + publish the image + commit manifests
+#                     Argo CD       = make the cluster match Git (sync, self-heal, health)
+#
+# Edit repoURL, then:  kubectl apply -n argocd -f argocd/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nexus-apps
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/YOUR-USER/YOUR-GITOPS-REPO.git   # <-- change me
+        revision: main
+        directories:
+          - path: apps/*
+  template:
+    metadata:
+      name: "{{path.basename}}"          # Application name == NEXUS app name
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/YOUR-USER/YOUR-GITOPS-REPO.git   # <-- change me
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

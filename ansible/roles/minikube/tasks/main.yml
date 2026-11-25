@@ -1,0 +1,16 @@
+---
+- name: Install Minikube
+  ansible.builtin.get_url:
+    url: "https://storage.googleapis.com/minikube/releases/{{ minikube_version }}/minikube-linux-amd64"
+    dest: /usr/local/bin/minikube
+    mode: "0755"
+
+# Minikube must NOT run as root; it uses the docker driver as the admin user.
+- name: Start Minikube (single node, docker driver)
+  ansible.builtin.command: >-
+    minikube start --driver=docker --cpus={{ minikube_cpus }} --memory={{ minikube_memory_mb }}
+  become: true
+  become_user: "{{ admin_user }}"
+  register: minikube_start_result
+  changed_when: "'Done!' in minikube_start_result.stdout"
+  when: minikube_start | bool

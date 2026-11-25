@@ -1,0 +1,23 @@
+---
+# Non-secret settings shared by every role. Override on the command line with -e.
+admin_user: ubuntu
+
+common_packages: [ca-certificates, curl, gnupg, git, unzip, zip, jq, ufw, htop, python3-pip, conntrack, socat]
+timezone: UTC
+
+java_package: openjdk-21-jre-headless
+
+docker_daemon_log_max_size: 10m
+docker_daemon_log_max_file: "3"
+docker_prune_cron: true            # weekly cleanup: important on a 25 GB disk
+
+jenkins_listen_address: 127.0.0.1  # reach Jenkins through an SSH tunnel, not the internet
+
+kubectl_version: v1.30.4
+minikube_version: v1.33.1
+minikube_start: false              # set true to also start a single-node cluster
+minikube_cpus: 2
+minikube_memory_mb: 4096
+
+monitoring_dir: /opt/nexus/monitoring
+monitoring_deploy: false           # set true to copy ../monitoring and start it with docker compose

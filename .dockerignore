@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+!.env.example
+.venv
+__pycache__
+*.pyc
+nexus-data
+nexus-jobs
+node_modules
+*.zip
+tests/fixtures/_generated
+docs
+terraform/.terraform
+terraform/*.tfstate*

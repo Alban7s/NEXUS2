@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 64" role="img" aria-label="NEXUS — DevOps control plane">
+<defs>
+<linearGradient id="hx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1B74E4"/><stop offset="1" stop-color="#012A5C"/></linearGradient>
+<linearGradient id="pl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A70"/><stop offset="1" stop-color="#F25B48"/></linearGradient>
+<linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+</defs>
+<polygon points="32,2.5 57.5,17.25 57.5,46.75 32,61.5 6.5,46.75 6.5,17.25" fill="url(#hx)"/>
+<polygon points="32,2.5 57.5,17.25 57.5,46.75 32,61.5 6.5,46.75 6.5,17.25" fill="url(#gl)"/>
+<polygon points="32,2.5 57.5,17.25 57.5,46.75 32,61.5 6.5,46.75 6.5,17.25" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.2"/>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+<path d="M21 44V20" stroke="#fff"/><path d="M43 44V20" stroke="#fff"/>
+<path d="M21 20L43 44" stroke="url(#pl)"/>
+</g>
+<circle cx="21" cy="20" r="4.2" fill="#fff" stroke="#F25B48" stroke-width="2.4"/>
+<circle cx="43" cy="44" r="4.2" fill="#fff" stroke="#F25B48" stroke-width="2.4"/>
+<circle cx="21" cy="44" r="2.4" fill="#fff"/><circle cx="43" cy="20" r="2.4" fill="#fff"/>
+<g transform="translate(78,20)">
+<g fill="none" stroke-width="4.6" stroke-linejoin="miter" stroke-linecap="butt">
+<g transform="translate(0,0)" stroke="#03234B" stroke-linejoin="bevel"><path d="M2.3 24V3L22.7 21V0"/></g>
+<g transform="translate(32,0)" stroke="#03234B"><path d="M22 2.3H2.3V21.7H22M2.3 12H18"/></g>
+<g transform="translate(64,0)" stroke="#F25B48"><path d="M1 0L23 24M23 0L1 24"/></g>
+<g transform="translate(96,0)" stroke="#03234B"><path d="M2.3 0V14Q2.3 21.7 12 21.7Q21.7 21.7 21.7 14V0"/></g>
+<g transform="translate(128,0)" stroke="#03234B" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4Q18 2.3 12 2.3Q2.5 2.3 2.5 7Q2.5 11.5 12 12.2Q21.5 13 21.5 17.2Q21.5 21.7 12 21.7Q5 21.7 2 19"/></g>
+</g>
+</g>
+</svg>

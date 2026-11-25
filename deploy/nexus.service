@@ -1,0 +1,24 @@
+# systemd unit: run NEXUS directly on the Ubuntu EC2 host (not in a container).
+# Running on the host means NEXUS can use the host's Docker socket and ~/.kube/config
+# (Minikube) without mounting them into a container.
+#   sudo cp deploy/nexus.service /etc/systemd/system/nexus.service
+#   sudo systemctl daemon-reload && sudo systemctl enable --now nexus
+[Unit]
+Description=NEXUS DevOps platform
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+User=ubuntu
+Group=docker
+WorkingDirectory=/home/ubuntu/NEXUS
+EnvironmentFile=/home/ubuntu/NEXUS/.env
+ExecStart=/home/ubuntu/NEXUS/.venv/bin/uvicorn backend.app:app --host 127.0.0.1 --port 8000
+Restart=on-failure
+RestartSec=5
+# Basic hardening (NEXUS still needs Docker access, which is root-equivalent)
+NoNewPrivileges=true
+PrivateTmp=false
+
+[Install]
+WantedBy=multi-user.target

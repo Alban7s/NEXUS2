@@ -1,0 +1,38 @@
+groups:
+  - name: nexus
+    rules:
+      - alert: TargetDown
+        expr: up == 0
+        for: 2m
+        labels: { severity: critical }
+        annotations: { summary: "Scrape target {{ $labels.job }} / {{ $labels.instance }} is down" }
+
+      - alert: HealthEndpointFailing
+        expr: probe_success == 0
+        for: 1m
+        labels: { severity: critical }
+        annotations: { summary: "Health check failing for {{ $labels.instance }}" }
+
+      - alert: HighCpu
+        expr: 100 * (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m]))) > 85
+        for: 10m
+        labels: { severity: warning }
+        annotations: { summary: "Host CPU above 85% for 10 minutes" }
+
+      - alert: HighMemory
+        expr: 100 * (1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) > 90
+        for: 10m
+        labels: { severity: warning }
+        annotations: { summary: "Host memory above 90% for 10 minutes" }
+
+      - alert: DiskAlmostFull
+        expr: 100 * (1 - node_filesystem_avail_bytes{mountpoint="/",fstype!="tmpfs"} / node_filesystem_size_bytes{mountpoint="/",fstype!="tmpfs"}) > 85
+        for: 5m
+        labels: { severity: warning }
+        annotations: { summary: "Root disk above 85% (25 GB disk: run docker system prune)" }
+
+      - alert: DeploymentUnavailable
+        expr: kube_deployment_status_replicas_available < kube_deployment_spec_replicas
+        for: 5m
+        labels: { severity: warning }
+        annotations: { summary: "Deployment {{ $labels.deployment }} has unavailable replicas" }

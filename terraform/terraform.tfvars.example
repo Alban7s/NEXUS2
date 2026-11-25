@@ -1,0 +1,8 @@
+# Copy to terraform.tfvars (which is git-ignored) and edit.
+aws_region     = "ap-southeast-2"
+instance_name  = "nexus-server"
+instance_type  = "m7i-flex.large"
+ami_id         = ""                      # empty = latest Ubuntu 24.04 LTS
+root_volume_gb = 25
+admin_cidr     = "203.0.113.10/32"       # YOUR public IP + /32  (https://checkip.amazonaws.com)
+ssh_public_key = "ssh-ed25519 AAAA...replace-with-your-PUBLIC-key... you@laptop"

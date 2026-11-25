@@ -1,0 +1,6 @@
+---
+- name: Install Java 21 (required by Jenkins)
+  ansible.builtin.apt:
+    name: "{{ java_package }}"
+    state: present
+    update_cache: true

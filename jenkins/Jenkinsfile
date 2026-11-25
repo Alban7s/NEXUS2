@@ -1,0 +1,107 @@
+// NEXUS GitHub deployment job (administrator-managed).
+//
+// Jenkins only fetches the code from GitHub and hands it to NEXUS. NEXUS then runs
+// the SAME shared pipeline that a ZIP upload uses:
+//     inspect -> test -> build -> Trivy scan -> publish -> deploy -> verify
+// so there is only one build/scan/deploy engine to maintain.
+//
+// One-time Jenkins setup (see docs/setup):
+//   Credentials:  nexus-api-key  (Secret text)  = the NEXUS_API_KEY value
+//                 github-repo-creds (Username + token) = only for PRIVATE repos
+//   Global env:   NEXUS_URL = http://localhost:8000
+//   Create a Pipeline job named "nexus-github-deploy" (this file), "This project is parameterized".
+pipeline {
+  agent any
+  options { timestamps(); timeout(time: 30, unit: 'MINUTES'); disableConcurrentBuilds() }
+
+  parameters {
+    string(name: 'REPO_URL', defaultValue: '', description: 'https://github.com/<owner>/<repo>')
+    string(name: 'BRANCH',   defaultValue: 'main', description: 'Branch to deploy')
+    string(name: 'COMMIT',   defaultValue: '', description: 'Optional commit SHA')
+  }
+
+  environment {
+    NEXUS_URL = "${env.NEXUS_URL ?: 'http://localhost:8000'}"
+  }
+
+  stages {
+    stage('Validate parameters') {
+      steps {
+        script {
+          if (!(params.REPO_URL ==~ /^https:\/\/github\.com\/[A-Za-z0-9._-]+\/[A-Za-z0-9._-]+(\.git)?$/)) {
+            error('REPO_URL must look like https://github.com/<owner>/<repo>')
+          }
+          if (!(params.BRANCH ==~ /^[A-Za-z0-9][A-Za-z0-9._\/-]{0,99}$/) || params.BRANCH.contains('..')) {
+            error('BRANCH contains unsupported characters')
+          }
+          if (params.COMMIT && !(params.COMMIT ==~ /^[0-9a-fA-F]{7,40}$/)) {
+            error('COMMIT must be a hex SHA')
+          }
+        }
+      }
+    }
+
+    stage('Checkout') {
+      steps {
+        deleteDir()
+        // Private repositories: the token lives in Jenkins credentials, never in NEXUS or the browser.
+        // For a public repo remove credentialsId.
+        checkout([$class: 'GitSCM',
+          branches: [[name: "*/${params.BRANCH}"]],
+          userRemoteConfigs: [[url: params.REPO_URL, credentialsId: 'github-repo-creds']]])
+        script {
+          if (params.COMMIT) { sh 'git checkout --detach "$COMMIT"' }
+          env.GIT_SHA = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
+        }
+      }
+    }
+
+    stage('Package source') {
+      // git archive only includes committed files (no .git, no untracked .env).
+      steps { sh 'git archive --format=zip -o "$WORKSPACE/source.zip" HEAD' }
+    }
+
+    stage('Hand over to NEXUS') {
+      steps {
+        withCredentials([string(credentialsId: 'nexus-api-key', variable: 'NEXUS_KEY')]) {
+          // Single-quoted: the secret is expanded by the shell, never by Groovy (not echoed in the log).
+          sh '''
+            set +x
+            APP_NAME=$(basename "$REPO_URL" .git)
+            RESP=$(curl -sS --fail-with-body -X POST "$NEXUS_URL/api/deploy" \
+              -H "X-Nexus-Api-Key: $NEXUS_KEY" \
+              -F "file=@source.zip" -F "source=github" -F "app_name=$APP_NAME" \
+              -F "git_repo=$REPO_URL" -F "git_branch=$BRANCH" -F "git_commit=$GIT_SHA")
+            JOB_ID=$(echo "$RESP" | jq -r '.data.jobId')
+            [ "$JOB_ID" != "null" ] && [ -n "$JOB_ID" ] || { echo "NEXUS rejected the upload: $RESP"; exit 1; }
+            echo "NEXUS job: $JOB_ID"
+            echo "$JOB_ID" > nexus-job-id.txt
+          '''
+        }
+      }
+    }
+
+    stage('Wait for NEXUS pipeline') {
+      steps {
+        withCredentials([string(credentialsId: 'nexus-api-key', variable: 'NEXUS_KEY')]) {
+          sh '''
+            set +x
+            JOB_ID=$(cat nexus-job-id.txt)
+            for i in $(seq 1 180); do
+              STATUS=$(curl -sS "$NEXUS_URL/api/deploy/jobs/$JOB_ID" -H "X-Nexus-Api-Key: $NEXUS_KEY" | jq -r '.data.status')
+              echo "NEXUS status: $STATUS"
+              [ "$STATUS" = "success" ] && exit 0
+              [ "$STATUS" = "failed" ] && { curl -sS "$NEXUS_URL/api/deploy/jobs/$JOB_ID" -H "X-Nexus-Api-Key: $NEXUS_KEY" | jq -r '.data.error'; exit 1; }
+              sleep 10
+            done
+            echo "Timed out waiting for NEXUS"; exit 1
+          '''
+        }
+      }
+    }
+  }
+
+  post {
+    always { sh 'rm -f source.zip nexus-job-id.txt' }
+  }
+}
